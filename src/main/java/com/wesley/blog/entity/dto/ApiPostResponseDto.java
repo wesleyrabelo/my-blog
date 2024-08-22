@@ -3,13 +3,14 @@ package com.wesley.blog.entity.dto;
 import com.wesley.blog.entity.ApiPost;
 import com.wesley.blog.entity.ApiUser;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ApiPostResponseDto {
     private String title;
     private String content;
     private String apiUserEmail;
-    private Date publicationDate;
+    private LocalDateTime publicationDate;
 
     public ApiPostResponseDto() {
     }
@@ -50,11 +51,11 @@ public class ApiPostResponseDto {
         this.apiUserEmail = apiUserEmail;
     }
 
-    public Date getPublicationDate() {
+    public LocalDateTime getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
     }
 }

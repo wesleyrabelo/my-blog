@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class ApiPost {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ApiUser apiUser;
     @NotNull
-    private Date publicationDate;
+    private LocalDateTime publicationDate;
 
     public ApiPost() {
     }
@@ -30,7 +31,7 @@ public class ApiPost {
         this.title = title;
         this.content = content;
         this.apiUser = apiUser;
-        this.publicationDate = new Date();
+        this.publicationDate = LocalDateTime.now();
     }
 
     public ApiPost (ApiPostRequestDto apiPostRequestDto, ApiUser apiUser){
@@ -38,7 +39,7 @@ public class ApiPost {
         this.title = apiPostRequestDto.getTitle();
         this.content = apiPostRequestDto.getContent();
         this.apiUser = apiUser;
-        this.publicationDate = new Date();
+        this.publicationDate = LocalDateTime.now();
     }
 
     public void receivingContentFromDto(ApiPostRequestDto apiPostRequestDto){
@@ -78,11 +79,11 @@ public class ApiPost {
         this.apiUser = apiUser;
     }
 
-    public Date getPublicationDate() {
+    public LocalDateTime getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
     }
 }

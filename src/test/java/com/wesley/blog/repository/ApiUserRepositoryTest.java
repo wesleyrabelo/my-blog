@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @DataJpaTest
@@ -28,7 +29,7 @@ public class ApiUserRepositoryTest {
         Assertions.assertThat(apiUser).isNotNull();
         Assertions.assertThat(apiUser.getId()).isGreaterThan(0);
         Assertions.assertThat(apiUser.getEmail()).isEqualTo("teste@email.com");
-        Assertions.assertThat(apiUser.getCreationDate()).isBefore(new Date());
+        Assertions.assertThat(apiUser.getCreationDate()).isBefore(LocalDateTime.now());
 
     }
 

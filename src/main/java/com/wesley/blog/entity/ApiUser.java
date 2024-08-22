@@ -3,8 +3,8 @@ package com.wesley.blog.entity;
 import com.wesley.blog.entity.dto.ApiUserRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ApiUser {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Invalid password format")
     private String password;
     @NotNull
-    private Date creationDate;
+    private LocalDateTime creationDate;
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
@@ -45,7 +45,7 @@ public class ApiUser {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.creationDate = new Date();
+        this.creationDate = LocalDateTime.now();
         this.role = Role.USER;
     }
 
@@ -55,7 +55,7 @@ public class ApiUser {
         this.name = apiUserRequestDto.getName();
         this.email = apiUserRequestDto.getEmail();
         this.password = apiUserRequestDto.getPassword();
-        this.creationDate = new Date();
+        this.creationDate = LocalDateTime.now();;
         this.role = Role.USER;
     }
 
@@ -100,11 +100,11 @@ public class ApiUser {
         this.password = password;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
