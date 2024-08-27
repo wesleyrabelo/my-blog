@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,6 +16,7 @@ public class ApiUser {
     private List<ApiPost> apiPosts;
     @NotBlank(message = "Name cannot be empty")
     @Size(min = 6, max = 32)
+    @Column(unique = true)
     private String name;
     @Email(regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email")
     @NotBlank(message = "Email cannot be empty")
@@ -27,7 +27,7 @@ public class ApiUser {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Invalid password format")
     private String password;
     @NotNull
-    private LocalDateTime creationDate;
+    private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
@@ -45,7 +45,7 @@ public class ApiUser {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.creationDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
         this.role = Role.USER;
     }
 
@@ -55,7 +55,7 @@ public class ApiUser {
         this.name = apiUserRequestDto.getName();
         this.email = apiUserRequestDto.getEmail();
         this.password = apiUserRequestDto.getPassword();
-        this.creationDate = LocalDateTime.now();;
+        this.createdAt = LocalDateTime.now();;
         this.role = Role.USER;
     }
 
@@ -100,12 +100,12 @@ public class ApiUser {
         this.password = password;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Role getRole() {

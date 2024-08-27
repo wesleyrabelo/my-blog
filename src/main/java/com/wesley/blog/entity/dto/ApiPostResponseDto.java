@@ -1,30 +1,25 @@
 package com.wesley.blog.entity.dto;
 
 import com.wesley.blog.entity.ApiPost;
-import com.wesley.blog.entity.ApiUser;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ApiPostResponseDto {
     private String title;
     private String content;
     private String apiUserEmail;
-    private LocalDateTime publicationDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     public ApiPostResponseDto() {
-    }
-    public ApiPostResponseDto(String title, String content, ApiUser apiUser) {
-        this.title = title;
-        this.content = content;
-        this.apiUserEmail = apiUser.getEmail();
     }
 
     public ApiPostResponseDto(ApiPost apiPost){
         this.title = apiPost.getTitle();
         this.content = apiPost.getContent();
         this.apiUserEmail = apiPost.getApiUser().getEmail();
-        this.publicationDate = apiPost.getPublicationDate();
+        this.createdAt = apiPost.getCreatedAt();
+        this.modifiedAt = apiPost.getModifiedAt();
     }
 
     public String getTitle() {
@@ -51,11 +46,19 @@ public class ApiPostResponseDto {
         this.apiUserEmail = apiUserEmail;
     }
 
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 }

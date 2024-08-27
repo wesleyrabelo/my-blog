@@ -20,12 +20,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/post")
 public class ApiPostController {
+    private final ApiPostService apiPostService;
+    private final ApiUserService apiUserService;
+    private final SecurityService securityService;
+
     @Autowired
-    private ApiPostService apiPostService;
-    @Autowired
-    private ApiUserService apiUserService;
-    @Autowired
-    private SecurityService securityService;
+    public ApiPostController(ApiPostService apiPostService, ApiUserService apiUserService, SecurityService securityService) {
+        this.apiPostService = apiPostService;
+        this.apiUserService = apiUserService;
+        this.securityService = securityService;
+    }
 
     @PostMapping
     public ResponseEntity<ApiPostResponseDto> saveApiPost(@RequestBody @Valid ApiPostRequestDto apiPostRequestDto){

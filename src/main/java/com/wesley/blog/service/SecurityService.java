@@ -10,10 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Component("securityService")
 public class SecurityService {
+    private final ApiUserService userService;
+    private final ApiPostService postService;
+
     @Autowired
-    private ApiUserService userService;
-    @Autowired
-    private ApiPostService postService;
+    public SecurityService(ApiUserService userService, ApiPostService postService){
+        this.userService = userService;
+        this.postService = postService;
+    }
 
     public Authentication getAuthentication(){
         return SecurityContextHolder

@@ -27,10 +27,16 @@ import java.util.ArrayList;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    private final ApiUserDetailsService apiUserDetailsService;
+
+    private final JwtUtils jwtUtils;
+
     @Autowired
-    private ApiUserDetailsService apiUserDetailsService;
-    @Autowired
-    private JwtUtils jwtUtils = new JwtUtils();
+    public JwtFilter(ApiUserDetailsService apiUserDetailsService, JwtUtils jwtUtils) {
+        this.apiUserDetailsService = apiUserDetailsService;
+        this.jwtUtils = jwtUtils;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 

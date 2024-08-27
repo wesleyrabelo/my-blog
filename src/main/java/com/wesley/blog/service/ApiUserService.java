@@ -11,8 +11,12 @@ import java.util.List;
 
 @Service
 public class ApiUserService {
+    private final ApiUserRepository apiUserRepository;
+
     @Autowired
-    private ApiUserRepository apiUserRepository;
+    public ApiUserService(ApiUserRepository apiUserRepository) {
+        this.apiUserRepository = apiUserRepository;
+    }
 
     public ApiUser saveApiUser(ApiUser apiUser){
         return apiUserRepository.save(apiUser);
@@ -33,6 +37,13 @@ public class ApiUserService {
                 EntityNotFoundException::new
         );
     }
+
+    public ApiUser findApiUserByName(String name){
+     return apiUserRepository.findByName(name).orElseThrow(
+             EntityNotFoundException::new
+     );
+    }
+
     public List<ApiUser> findAllApiUsers(){
         return apiUserRepository.findAll();
     }

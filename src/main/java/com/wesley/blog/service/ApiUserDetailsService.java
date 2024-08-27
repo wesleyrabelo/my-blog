@@ -18,8 +18,13 @@ import java.util.List;
 
 @Component("apiUserDetailsService")
 public class ApiUserDetailsService implements UserDetailsService {
+
+    private final ApiUserRepository apiUserRepository;
+
     @Autowired
-    private ApiUserRepository apiUserRepository;
+    public ApiUserDetailsService(ApiUserRepository apiUserRepository){
+        this.apiUserRepository = apiUserRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

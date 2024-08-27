@@ -11,8 +11,12 @@ import java.util.List;
 
 @Service
 public class ApiPostService {
+    private final ApiPostRepository apiPostRepository;
+
     @Autowired
-    private ApiPostRepository apiPostRepository;
+    public ApiPostService(ApiPostRepository apiPostRepository) {
+        this.apiPostRepository = apiPostRepository;
+    }
 
     public ApiPost saveApiPost(ApiPost apiPost){ return apiPostRepository.save(apiPost);}
     public ApiPost putApiPost(ApiPost apiPost){return apiPostRepository.save(apiPost);}

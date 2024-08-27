@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class ApiPost {
@@ -22,7 +21,9 @@ public class ApiPost {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ApiUser apiUser;
     @NotNull
-    private LocalDateTime publicationDate;
+    private LocalDateTime createdAt;
+    @NotNull
+    private LocalDateTime modifiedAt;
 
     public ApiPost() {
     }
@@ -31,7 +32,8 @@ public class ApiPost {
         this.title = title;
         this.content = content;
         this.apiUser = apiUser;
-        this.publicationDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 
     public ApiPost (ApiPostRequestDto apiPostRequestDto, ApiUser apiUser){
@@ -39,12 +41,14 @@ public class ApiPost {
         this.title = apiPostRequestDto.getTitle();
         this.content = apiPostRequestDto.getContent();
         this.apiUser = apiUser;
-        this.publicationDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 
     public void receivingContentFromDto(ApiPostRequestDto apiPostRequestDto){
         if(apiPostRequestDto.getTitle() != null) this.title = apiPostRequestDto.getTitle();
         if(apiPostRequestDto.getContent() != null) this.content = apiPostRequestDto.getContent();
+        this.modifiedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -79,11 +83,19 @@ public class ApiPost {
         this.apiUser = apiUser;
     }
 
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 }

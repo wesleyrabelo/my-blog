@@ -1,6 +1,7 @@
 package com.wesley.blog.controller;
 
 import com.wesley.blog.entity.ApiUser;
+import com.wesley.blog.entity.dto.ApiUserLoginRequestDto;
 import com.wesley.blog.entity.dto.ApiUserRequestDto;
 import com.wesley.blog.entity.dto.ApiUserResponseDto;
 import com.wesley.blog.security.jwt.JwtToken;
@@ -26,25 +27,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class ApiUserController {
+
+    private final ApiUserService apiUserService;
+    private final ApiUserDetailsService apiUserDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private ApiUserService apiUserService;
-    @Autowired
-    private ApiUserDetailsService apiUserDetailsService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private SecurityService securityService;
-    @Autowired
-    JwtUtils jwtUtils = new JwtUtils();
+    public ApiUserController(ApiUserService apiUserService, ApiUserDetailsService apiUserDetailsService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, SecurityService securityService) {
+        this.apiUserService = apiUserService;
+        this.apiUserDetailsService = apiUserDetailsService;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid ApiUserRequestDto apiUserRequestDto){
-        UserDetails userDetails = apiUserDetailsService.loadUserByUsername(apiUserRequestDto.getEmail());
+    public ResponseEntity<String> login(@RequestBody @Valid ApiUserLoginRequestDto apiUserLoginRequestDto){
+        UserDetails userDetails = apiUserDetailsService.loadUserByUsername(apiUserLoginRequestDto.getEmail());
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                  userDetails.getUsername(),
-                 apiUserRequestDto.getPassword(),
+                 apiUserLoginRequestDto.getPassword(),
                  userDetails.getAuthorities()
         );
         Authentication auth = authenticationManager.authenticate(token);
@@ -76,6 +78,11 @@ public class ApiUserController {
     public ResponseEntity<ApiUserResponseDto> findApiUserById(@PathVariable Long id){
         ApiUser apiUser = apiUserService.findApiUserById(id);
         return ResponseEntity.ok(new ApiUserResponseDto(apiUser));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ApiUserResponseDto> findApiUserByName(@PathVariable String name){
+        return ResponseEntity.ok(new ApiUserResponseDto(apiUserService.findApiUserByName(name)));
     }
     @GetMapping
     public ResponseEntity<List<ApiUserResponseDto>> findAllApiUsers(){

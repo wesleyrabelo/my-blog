@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -29,7 +28,7 @@ public class ApiUserRepositoryTest {
         Assertions.assertThat(apiUser).isNotNull();
         Assertions.assertThat(apiUser.getId()).isGreaterThan(0);
         Assertions.assertThat(apiUser.getEmail()).isEqualTo("teste@email.com");
-        Assertions.assertThat(apiUser.getCreationDate()).isBefore(LocalDateTime.now());
+        Assertions.assertThat(apiUser.getCreatedAt()).isBefore(LocalDateTime.now());
 
     }
 
